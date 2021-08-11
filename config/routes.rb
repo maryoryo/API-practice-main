@@ -5,4 +5,6 @@ Rails.application.routes.draw do
   get 'youtubes/index'
   
   post '/callback' => 'linebots#callback'
+  
+  resources :twitters, only: [:index, :new, :create]
 end

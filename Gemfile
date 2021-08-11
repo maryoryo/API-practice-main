@@ -63,5 +63,6 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'line-bot-api'
 gem 'google-api-client', '~> 0.11'
+gem 'twitter'
 gem 'dotenv-rails'
 

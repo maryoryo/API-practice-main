@@ -94,9 +94,8 @@ class LinebotsController < ApplicationController
         end
       end
     }
-    "OK"
+    # "OK"
+    head :ok
   end
   
 end
-
-# The bot server must return status code 200 after it receives the HTTP POST request sent from the LINE Platform.
