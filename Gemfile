@@ -66,3 +66,10 @@ gem 'google-api-client', '~> 0.11'
 gem 'twitter'
 gem 'dotenv-rails'
 
+gem 'devise'
+gem 'cancancan'
+gem 'rails_admin'
+
+gem 'rails-i18n'
+
+gem 'simple_calendar', '~> 2.0'

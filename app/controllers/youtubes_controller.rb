@@ -53,50 +53,82 @@ class YoutubesController < ApplicationController
   
   
   
-  # require 'google/apis/youtube_v3'
-  
-  # GOOGLE_API_KEY = Rails.application.credentials.google[:api_key]
-
-  # def list_searches(keyword)
-  #   youtube = Google::Apis::YoutubeV3::YouTubeService.new
-  #   youtube.key = GOOGLE_API_KEY
-
-  #   keyword = "はなおでんがん" #実際には検索フォームで取得するが、今回は例として”はなおでんがん”をセット
-  #   options = {
-  #     :q => keyword,   #キーワード検索している想定
-  #     :order => "date" #日付順で動画を取得
-  #   }
-    
-  #   response = youtube.list_searches("id, snippet", options)
-    
-  #   channel_id = response[:items][0][:snippet][:channelId]
-  #   @channel_url = "https://www.youtube.com/channel/#{channel_id}" #aタグに挿入するURL
-  #   @channel_title = response[:items][0][:channelTitle]            #aタグのテキスト用
-  # end
-  
-  # def index
-  #   @youtube_data = list_searches(keyword)
-  # end
-  
-  
-  
   require 'google/apis/youtube_v3'
   
-  def list_channels
+  GOOGLE_API_KEY = Rails.application.credentials.google[:api_key]
+
+  def list_searches(keyword)
     youtube = Google::Apis::YoutubeV3::YouTubeService.new
-    youtube.key = Rails.application.credentials.google[:api_key]
-    
+    youtube.key = GOOGLE_API_KEY
+
+    # keyword = "はなおでんがん" #実際には検索フォームで取得するが、今回は例として”はなおでんがん”をセット
     options = {
-      :id => 'UCPyNsNSTUtywkekbDdCA_8Q' #YouTubeチャンネルのIDを指定
+      :q => keyword,   #キーワード検索している想定
+      :order => "date" #日付順で動画を取得
     }
     
-    response = youtube.list_channels("snippet", options)
+    youtube.list_searches(:snippet, options)
     
-    @channel_title = response[:items][0][:snippet][:title]
+    # channel_id = response[:items][0][:snippet][:channelId]
+    # @channel_url = "https://www.youtube.com/channel/#{channel_id}" #aタグに挿入するURL
+    # @channel_title = response[:items][0][:channelTitle]            #aタグのテキスト用
   end
   
   def index
-    @youtube.list_channels("snippet", options)
+    @youtube_data = list_searches("はなおでんがん")
   end
+  
+  
+  
+  # require 'google/apis/youtube_v3'
+  
+  # def list_channels
+  #   youtube = Google::Apis::YoutubeV3::YouTubeService.new
+  #   youtube.key = Rails.application.credentials.google[:api_key]
+    
+  #   options = {
+  #     :id => 'UCPyNsNSTUtywkekbDdCA_8Q' #YouTubeチャンネルのIDを指定
+  #   }
+    
+  #   response = youtube.list_channels("snippet", options)
+    
+  #   @channel_title = response[:items][0][:snippet][:title]
+  # end
+  
+  # def index
+  #   @youtube.list_channels("snippet", options)
+  # end
+  
+  
+  
+  
+  
+    require 'google/apis/youtube_v3'
+  
+    GOOGLE_API_KEY = Rails.application.credentials.google[:api_key]
+  
+    def list_channels(snippet)
+      youtube = Google::Apis::YoutubeV3::YouTubeService.new
+      youtube.key = GOOGLE_API_KEY
+  
+      # keyword = "はなおでんがん" #実際には検索フォームで取得するが、今回は例として”はなおでんがん”をセット
+      options = {
+        # :part => snippet,   #キーワード検索している想定
+        :forUsername => "はなおでんがん"
+      }
+      
+      youtube.list_channels(:snippet, options)
+      
+      # channel_id = response[:items][0][:snippet][:channelId]
+      # @channel_url = "https://www.youtube.com/channel/#{channel_id}" #aタグに挿入するURL
+      # @channel_title = response[:items][0][:channelTitle]            #aタグのテキスト用
+    end
+    
+    def index
+      @youtube_data = list_channels
+    end
+
+  
+  
 
 end
