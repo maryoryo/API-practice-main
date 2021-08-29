@@ -57,26 +57,71 @@ class YoutubesController < ApplicationController
   
   GOOGLE_API_KEY = Rails.application.credentials.google[:api_key]
 
-  def list_searches(keyword)
+  # def list_searches(keyword)
+  #   youtube = Google::Apis::YoutubeV3::YouTubeService.new
+  #   youtube.key = GOOGLE_API_KEY
+
+  #   # keyword = "はなおでんがん" #実際には検索フォームで取得するが、今回は例として”はなおでんがん”をセット
+  #   options = {
+  #     :q => keyword,   #キーワード検索している想定
+  #     :order => "date" #日付順で動画を取得
+  #   }
+    
+  #   youtube.list_searches(:snippet, options)
+    
+  #   # channel_id = response[:items][0][:snippet][:channelId]
+  #   # @channel_url = "https://www.youtube.com/channel/#{channel_id}" #aタグに挿入するURL
+  #   # @channel_title = response[:items][0][:channelTitle]            #aタグのテキスト用
+  # end
+  
+  # def index
+  #   @youtube_data = list_searches("はなおでんがん")
+  # end
+  
+  
+  
+  
+  
+  
+  def find_videos(keyword, after: 7.months.ago, before: Time.now)
     youtube = Google::Apis::YoutubeV3::YouTubeService.new
     youtube.key = GOOGLE_API_KEY
-
-    # keyword = "はなおでんがん" #実際には検索フォームで取得するが、今回は例として”はなおでんがん”をセット
-    options = {
-      :q => keyword,   #キーワード検索している想定
-      :order => "date" #日付順で動画を取得
+    
+    youtube = Google::Apis::YoutubeV3::YouTubeService.new
+    youtube.key = GOOGLE_API_KEY
+    
+    keyword = params[:search] #キーワード検索した値を代入
+    # next_page_token = nil
+    opt = {
+      q: keyword, #検索クエリで該当するワードを検索
+      type: 'video',
+      max_results: 10,
+      order: :date,
+      # page_token: next_page_token,
+      published_after: after.iso8601,
+      published_before: before.iso8601
     }
-    
-    youtube.list_searches(:snippet, options)
-    
-    # channel_id = response[:items][0][:snippet][:channelId]
-    # @channel_url = "https://www.youtube.com/channel/#{channel_id}" #aタグに挿入するURL
-    # @channel_title = response[:items][0][:channelTitle]            #aタグのテキスト用
+    youtube.list_searches(:snippet, opt)
+  end
+
+  def index
+    @youtubes = find_videos(@keyword)
+
   end
   
-  def index
-    @youtube_data = list_searches("はなおでんがん")
-  end
+  
+  
+  
+  
+  
+  
+  
+  
+  # def index
+  #   @youtebes = list_searches(params[:keyword])
+  #   @keyword = params[:keyword]
+  #   render "index"
+  # end
   
   
   
@@ -103,30 +148,30 @@ class YoutubesController < ApplicationController
   
   
   
-    require 'google/apis/youtube_v3'
+    # require 'google/apis/youtube_v3'
   
-    GOOGLE_API_KEY = Rails.application.credentials.google[:api_key]
+    # GOOGLE_API_KEY = Rails.application.credentials.google[:api_key]
   
-    def list_channels(snippet)
-      youtube = Google::Apis::YoutubeV3::YouTubeService.new
-      youtube.key = GOOGLE_API_KEY
+    # def list_channels(snippet)
+    #   youtube = Google::Apis::YoutubeV3::YouTubeService.new
+    #   youtube.key = GOOGLE_API_KEY
   
-      # keyword = "はなおでんがん" #実際には検索フォームで取得するが、今回は例として”はなおでんがん”をセット
-      options = {
-        # :part => snippet,   #キーワード検索している想定
-        :forUsername => "はなおでんがん"
-      }
+    #   # keyword = "はなおでんがん" #実際には検索フォームで取得するが、今回は例として”はなおでんがん”をセット
+    #   options = {
+    #     # :part => snippet,   #キーワード検索している想定
+    #     :forUsername => "はなおでんがん"
+    #   }
       
-      youtube.list_channels(:snippet, options)
+    #   youtube.list_channels(:snippet, options)
       
-      # channel_id = response[:items][0][:snippet][:channelId]
-      # @channel_url = "https://www.youtube.com/channel/#{channel_id}" #aタグに挿入するURL
-      # @channel_title = response[:items][0][:channelTitle]            #aタグのテキスト用
-    end
+    #   # channel_id = response[:items][0][:snippet][:channelId]
+    #   # @channel_url = "https://www.youtube.com/channel/#{channel_id}" #aタグに挿入するURL
+    #   # @channel_title = response[:items][0][:channelTitle]            #aタグのテキスト用
+    # end
     
-    def index
-      @youtube_data = list_channels
-    end
+    # def index
+    #   @youtube_data = list_channels
+    # end
 
   
 end
