@@ -91,13 +91,13 @@ class YoutubesController < ApplicationController
     youtube.key = GOOGLE_API_KEY
     
     keyword = params[:search] #キーワード検索した値を代入
-    # next_page_token = nil
+    next_page_token = nil
     opt = {
       q: keyword, #検索クエリで該当するワードを検索
       type: 'video',
       max_results: 10,
       order: :date,
-      # page_token: next_page_token,
+      page_token: next_page_token,
       published_after: after.iso8601,
       published_before: before.iso8601
     }

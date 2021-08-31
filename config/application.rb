@@ -17,5 +17,10 @@ module APIPracticeMain
     # the framework and any gems in your application.
     config.i18n.default_locale = :ja
     config.beginning_of_week = :sunday
+    
+    config.generators do |g|
+      g.jbuilder false
+    end
+    
   end
 end
