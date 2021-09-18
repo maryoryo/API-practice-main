@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  get 'designpages/index'
+  get 'designpages/show'
   resources :talks
   resources :mails
   resources :friends
