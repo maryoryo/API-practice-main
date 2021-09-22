@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @manege.name %>
+</p>
+
+<p>
+  <strong>Post:</strong>
+  <%= @manege.post %>
+</p>
+
+<%= link_to 'Edit', edit_manege_path(@manege) %> |
+<%= link_to 'Back', maneges_path %>

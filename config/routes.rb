@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :maneges
   get 'designpages/index'
   get 'designpages/show'
   resources :talks

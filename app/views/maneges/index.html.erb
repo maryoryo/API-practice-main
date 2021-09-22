@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Maneges</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Post</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @maneges.each do |manege| %>
+      <tr>
+        <td><%= manege.name %></td>
+        <td><%= manege.post %></td>
+        <td><%= link_to 'Show', manege %></td>
+        <td><%= link_to 'Edit', edit_manege_path(manege) %></td>
+        <td><%= link_to 'Destroy', manege, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Manege', new_manege_path %>
