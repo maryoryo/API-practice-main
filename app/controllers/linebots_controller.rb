@@ -61,6 +61,67 @@ class LinebotsController < ApplicationController
   
 
 
+#   require 'line/bot'
+  
+#   protect_from_forgery with: :null_session
+
+#   before_action :validate_signature
+
+#   def validate_signature
+#     body = request.body.read
+#     signature = request.env['HTTP_X_LINE_SIGNATURE']
+#     unless client.validate_signature(body, signature)
+#       error 400 do 'Bad Request' end
+#     end
+#   end
+
+#   def client
+#     @client ||= Line::Bot::Client.new { |config|
+#       config.channel_secret = ENV["LINE_CHANNEL_SECRET"]
+#       config.channel_token = ENV["LINE_CHANNEL_TOKEN"]
+#     }
+#   end
+  
+#   def callback
+#     body = request.body.read
+#     events = client.parse_events_from(body)
+
+#     events.each { |event|
+#       case event
+#       when Line::Bot::Event::Message
+#         case event.type
+#         when Line::Bot::Event::MessageType::Text
+#           message = {
+#             type: 'text',
+#             text: event.message['text']
+#           }
+#           message = {
+#             type: 'text',
+#             text: event.message['text']
+#           }
+#           message = {
+#             type: 'text',
+#             text: event.message['text']
+#           }
+#           message = {
+#             type: 'text',
+#             text: event.message['text']
+#           }
+#           client.reply_message(event['replyToken'], message)
+#         when Line::Bot::Event::MessageType::Image, Line::Bot::Event::MessageType::Video
+#           response = client.get_message_content(event.message['id'])
+#           tf = Tempfile.open("content")
+#           tf.write(response.body)
+#         end
+#       end
+#     }
+#     "OK"
+#   end
+  
+# end
+  
+  
+  
   require 'line/bot'
   
   protect_from_forgery with: :null_session
@@ -107,67 +168,24 @@ class LinebotsController < ApplicationController
             type: 'text',
             text: event.message['text']
           }
-          client.reply_message(event['replyToken'], message)
-        when Line::Bot::Event::MessageType::Image, Line::Bot::Event::MessageType::Video
-          response = client.get_message_content(event.message['id'])
-          tf = Tempfile.open("content")
-          tf.write(response.body)
-        end
-      end
-    }
-    "OK"
-  end
-  
-end
-  
-  
-  
-  require 'line/bot'
-  
-  protect_from_forgery with: :null_session
-
-  before_action :validate_signature
-
-  def validate_signature
-    body = request.body.read
-    signature = request.env['HTTP_X_LINE_SIGNATURE']
-    unless client.validate_signature(body, signature)
-      error 400 do 'Bad Request' end
-    end
-  end
-
-  def client
-    @client ||= Line::Bot::Client.new { |config|
-      config.channel_secret = ENV["LINE_CHANNEL_SECRET"]
-      config.channel_token = ENV["LINE_CHANNEL_TOKEN"]
-    }
-  end
-  
-  def callback
-    body = request.body.read
-    events = client.parse_events_from(body)
-
-    events.each { |event|
-      case event
-      when Line::Bot::Event::Message
-        case event.type
-        when Line::Bot::Event::MessageType::Text
-          message = {
-            type: 'text',
-            text: event.message['text']
-          }
-          message = {
-            type: 'text',
-            text: event.message['text']
-          }
-          message = {
-            type: 'text',
-            text: event.message['text']
-          }
-          message = {
-            type: 'text',
-            text: event.message['text']
-          }
+         when Line::Bot::Event::MessageType::Image
+            # image_url = "https://user-images.githubusercontent.com/78590928/135243584-602213c5-4c3e-480b-b7b4-52af0b20294c.jpg"  #httpsであること
+            image_url = "	https://tk.ismcdn.jp/mwimgs/7/6/1140/img_761783d94524387445e94d79e99b739a80657.jpg"  #httpsであること
+            # image_url = "../../images/271849000.jpg"  #httpsであること
+              message = {
+                type: "image",
+                originalContentUrl: image_url,
+                previewImageUrl: image_url
+              }
+            # image_url = "https://user-images.githubusercontent.com/78590928/135243584-602213c5-4c3e-480b-b7b4-52af0b20294c.jpg"  #httpsであること
+            image_url = "	https://tk.ismcdn.jp/mwimgs/7/6/1140/img_761783d94524387445e94d79e99b739a80657.jpg"  #httpsであること
+            # image_url = "../../images/271849000.jpg"  #httpsであること
+              message = {
+                type: 'text',
+                text: event.message['text']
+                response = "おはよう。なんで今まで連絡くれなかったの？"
+              }
+        # end #event.type
           client.reply_message(event['replyToken'], message)
         when Line::Bot::Event::MessageType::Image, Line::Bot::Event::MessageType::Video
           response = client.get_message_content(event.message['id'])
